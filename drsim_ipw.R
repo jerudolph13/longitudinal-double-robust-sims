@@ -9,20 +9,16 @@
 #
 ##################################################################################################
 
-#lib <- "~/R/x86_64-pc-linux-gnu-library/4.0"
 packages <- c("tidyverse", "survival", "parallel")
 for (package in packages) {
-  library(package, character.only=T)#, lib.loc=lib)
+  library(package, character.only=T))
 }
-
-# Pull in command line arguments
-#args <- commandArgs(trailingOnly=TRUE)
 
 # Define parameters and functions
 nsim <- 1000              #Number of simulations
-nboot <- 0              #Number of bootstrap resamples
-n <- 1000 #as.numeric(args[1])  #Sample size: {200, 500, 1000, 2000, 5000, 10000}
-k <- 5 #as.numeric(args[2])  #Number of time points: {1, 5, 10, 20, 50}
+nboot <- 200              #Number of bootstrap resamples
+n <- 1000                 #Sample size: {200, 500, 1000, 2000, 5000, 10000}
+k <- 5                    #Number of time points: {1, 5, 10, 20, 50}
 yk <- 0.5/k               #Probability of the outcome at any given time point
 cores <- detectCores()
 
@@ -243,7 +239,6 @@ bootrep <- function(b) {
   return(sim.res)
 }   
 
-#all.res <- lapply(1:nsim, function(x) {sim_loop(x)})
 all.res <- mclapply(1:nsim, function(x) {sim_loop(x)}, mc.cores=cores, mc.set.seed=FALSE)
 all.res <- do.call(rbind, all.res)
 
@@ -269,6 +264,6 @@ summ.res <- all.res %>%
          eff = sd.rd/avg.se)
 
 #Output results
-# filename <- paste("./results/drsim_ipw_n-",n,"_k-", k,".txt", sep="")
-# write.table(all.res, file=filename, sep="\t", row.names=FALSE)
-# 
+filename <- paste("../results/drsim_ipw_n-",n,"_k-", k,".txt", sep="")
+write.table(all.res, file=filename, sep="\t", row.names=FALSE)
+ 
