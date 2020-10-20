@@ -10,20 +10,16 @@
 #
 ##################################################################################################
 
-lib <- "~/R/x86_64-pc-linux-gnu-library/4.0"
+
 packages <- c("tidyverse", "ltmle", "SuperLearner", "ranger", "parallel", "gam", "earth")
 for (package in packages) {
   library(package, character.only=T, lib.loc=lib)
 }
 
-
-# Pull in command line arguments
-args <- commandArgs(trailingOnly=TRUE)
-
 # Define parameters and functions
 nsim <- 1000              #Number of simulations
-n <- as.numeric(args[1])  #Sample size: {200, 500, 1000, 2000, 5000, 10000}
-k <- as.numeric(args[2])  #Number of time points: {1, 5, 10, 20, 50}
+n <- 1000                 #Sample size: {200, 500, 1000, 2000, 5000, 10000}
+k <- 5                    #Number of time points: {1, 5, 10, 20, 50}
 yk <- 0.5/k               #Probability of the outcome at any given time point
 cores <- detectCores()
 
@@ -34,7 +30,7 @@ cores <- detectCores()
 #Start simulation
 
 #What is the truth for this scenario?
-truth.k <- read.table("drsim_truth.txt", header=TRUE, sep="\t")
+truth.k <- read.table("../results/drsim_truth.txt", header=TRUE, sep="\t")
 true_rd <- truth.k$rd[truth.k$k==k]
 
 res <- data.frame(method=c("glm_default", "glm_user", "SL_default", "SL_user"),
@@ -293,5 +289,5 @@ summ.res <- all.res %>%
          eff = sd.rd/avg.se)
 
 #Output results
-filename <- paste("./results/drsim_n-",n,"_k-",k,".txt", sep="")
+filename <- paste("../results/drsim_n-",n,"_k-",k,".txt", sep="")
 write.table(all.res, file=filename, sep="\t", row.names=FALSE)
