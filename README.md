@@ -1,6 +1,7 @@
 # Double-robust estimation in longitudinal data with time-varying confounding: a simulation study
 
 This is a repository of code related to the work-in-progress above, nicknamed "drsim."  
+
 Three programs are provided under drsim/code:
   1. drsim_ltmle.R : Generates simulations and analyzes data using Longitudinal Targeted Minimum Loss-Based Estimation (LTMLE).
   2. drsim_ipw.R : Generates simulations and analyzes data using inverse probability weighting (IPW).
