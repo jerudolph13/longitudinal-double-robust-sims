@@ -13,7 +13,7 @@
 
 packages <- c("tidyverse", "ltmle", "SuperLearner", "ranger", "parallel", "gam", "earth")
 for (package in packages) {
-  library(package, character.only=T, lib.loc=lib)
+  library(package, character.only=T)
 }
 
 # Define parameters and functions
